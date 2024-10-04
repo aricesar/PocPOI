@@ -1,6 +1,7 @@
 import controller.ImportacaoController;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import util.H2Console;
 import util.HibernateUtil;
 import util.H2Server;
 
@@ -11,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         // Inicia o servidor TCP do H2
         H2Server.startTcpServer();
+        H2Console.iniciarH2Console();
 
         String excelFilePath = "src/main/resources/dados_tabelao.xlsx";
 
