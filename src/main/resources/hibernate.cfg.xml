@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configurações de Conexão com o Banco de Dados -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:tcp://localhost:9092/mem:testdb;DB_CLOSE_DELAY=-1</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"></property>
+
+        <!-- Dialeto do Hibernate para H2 -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Mostrar o SQL gerado no console -->
+        <property name="show_sql">true</property>
+
+        <!-- Formatar o SQL gerado -->
+        <property name="format_sql">true</property>
+
+        <!-- Atualizar o esquema do banco de dados -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Mapeamentos de entidades -->
+        <mapping class="model.Tabelao"/>
+        <mapping class="model.ControleImportacao"/>
+    </session-factory>
+</hibernate-configuration>
