@@ -33,7 +33,7 @@ public class ImportacaoController {
             Iterator<Row> rowIterator = sheet.iterator();
 
             // Ler o cabeçalho
-            Row headerRow = rowIterator.hasNext() ? rowIterator.next() : null;
+           Row headerRow = rowIterator.hasNext() ? rowIterator.next() : null;
 
             // Verifica se o arquivo já foi importado e se teve erros
             List<Integer> linhasComErro = controleImportacaoDAO.buscarLinhasComErro(excelFilePath);
