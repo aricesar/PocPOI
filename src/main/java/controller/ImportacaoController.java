@@ -134,38 +134,6 @@ public class ImportacaoController {
         return dto;
     }
 
-
-    private Tabelao criarRegistroAPartirDaLinha(Row row) throws Exception {
-        Tabelao registro = new Tabelao();
-
-        try {
-            registro.setAutorId(getIntegerCellValue(row.getCell(0)));
-            registro.setTipoRegistro(getStringCellValue(row.getCell(1)));
-            registro.setNomeAutor(getStringCellValue(row.getCell(2)));
-            registro.setNacionalidade(getStringCellValue(row.getCell(3)));
-            registro.setDataNascimento(getDateCellValue(row.getCell(4)));
-            registro.setNomeEditora(getStringCellValue(row.getCell(5)));
-            registro.setEnderecoEditora(getStringCellValue(row.getCell(6)));
-            registro.setTelefoneEditora(getStringCellValue(row.getCell(7)));
-            registro.setIsbn(getStringCellValue(row.getCell(8)));
-            registro.setAnoPublicacao(getIntegerCellValue(row.getCell(9)));
-            registro.setQuantidade(getIntegerCellValue(row.getCell(10)));
-            registro.setDisponivel(getBooleanCellValue(row.getCell(11)));
-            registro.setNomeUsuario(getStringCellValue(row.getCell(12)));
-            registro.setEmail(getStringCellValue(row.getCell(13)));
-            registro.setTelefoneUsuario(getStringCellValue(row.getCell(14)));
-            registro.setEnderecoUsuario(getStringCellValue(row.getCell(15)));
-            registro.setDataCadastro(getDateCellValue(row.getCell(16)));
-            registro.setDataEmprestimo(getDateCellValue(row.getCell(17)));
-            registro.setDataDevolucao(getDateCellValue(row.getCell(18)));
-            registro.setStatusEmprestimo(getStringCellValue(row.getCell(19)));
-        } catch (Exception e) {
-            throw new Exception("Erro ao criar registro: " + e.getMessage());
-        }
-
-        return registro;
-    }
-
     private void registrarErro(String nomeArquivo, int numeroLinha, String campo, String mensagemErro) {
         ControleImportacao erro = new ControleImportacao();
         erro.setNomeArquivo(nomeArquivo);
