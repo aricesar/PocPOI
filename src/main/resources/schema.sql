@@ -36,3 +36,21 @@ CREATE TABLE controle_importacao (
     mensagem_erro VARCHAR(255) NOT NULL,
     data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Tabela Autor
+DROP TABLE IF EXISTS autor;
+
+CREATE TABLE autor (
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nome_autor VARCHAR(255) NOT NULL,
+    endereco_autor VARCHAR(255) NOT NULL
+);
+
+-- Tabela Usuario
+DROP TABLE IF EXISTS usuario;
+
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome_usuario VARCHAR(255) NOT NULL,
+    endereco_usuario VARCHAR(255) NOT NULL
+);
