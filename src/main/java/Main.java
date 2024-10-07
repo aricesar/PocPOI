@@ -14,7 +14,6 @@ public class Main {
         H2Server.startTcpServer();
 
         //Inicia o H2 console http://192.168.0.38:8082
-        H2Console.iniciarH2Console();
 
         String excelFilePath = "src/main/resources/dados_tabelao.xlsx";
 
@@ -27,6 +26,8 @@ public class Main {
 
         transaction.commit();
         session.close();
+        H2Console.iniciarH2Console();
+
         new Scanner(System.in).nextLine();
         // Para o servidor TCP do H2
         H2Server.stopTcpServer();
