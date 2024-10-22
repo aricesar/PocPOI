@@ -1,9 +1,7 @@
 package controller;
 
-import dao.ControleImportacaoDAO;
 import dao.TabelaoDAO;
 import dto.TabelaoDTO;
-import model.ControleImportacao;
 import model.Tabelao;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -17,12 +15,10 @@ public class ImportacaoController {
 
     private Session session;
     private TabelaoDAO tabelaoDAO;
-    private ControleImportacaoDAO controleImportacaoDAO;
 
     public ImportacaoController(Session session) {
         this.session = session;
         this.tabelaoDAO = new TabelaoDAO(session);
-        this.controleImportacaoDAO = new ControleImportacaoDAO(session);
     }
 
     public void importarDados(String excelFilePath) {
@@ -33,11 +29,8 @@ public class ImportacaoController {
             Iterator<Row> rowIterator = sheet.iterator();
 
             // Ler o cabeçalho
-           Row headerRow = rowIterator.hasNext() ? rowIterator.next() : null;
+            Row headerRow = rowIterator.hasNext() ? rowIterator.next() : null;
 
-            // Verifica se o arquivo já foi importado e se teve erros
-            List<Integer> linhasComErro = controleImportacaoDAO.buscarLinhasComErro(excelFilePath);
-            Set<Integer> linhasErroSet = new HashSet<>(linhasComErro);
 
             int numeroLinha = 1; // Inicia em 1 após o cabeçalho
 
@@ -46,13 +39,6 @@ public class ImportacaoController {
                 Row row = rowIterator.next();
                 numeroLinha++;
 
-                // Se o arquivo não teve erros anteriores, importamos todas as linhas
-                // Caso contrário, importamos apenas as linhas com erro
-                if (!linhasErroSet.isEmpty() && !linhasErroSet.contains(numeroLinha)) {
-                    continue;
-                }
-
-                try {
                     // Cria o DTO a partir da linha
                     TabelaoDTO dto = criarDTOAPartirDaLinha(row);
 
@@ -62,14 +48,6 @@ public class ImportacaoController {
                     // Salva o registro no banco de dados
                     tabelaoDAO.salvar(registro);
 
-                    // Se a importação for bem-sucedida, remove o registro de erro, se existir
-                    controleImportacaoDAO.removerErro(excelFilePath, numeroLinha);
-
-                } catch (Exception e) {
-                    // Registra o erro na tabela de controle
-                    registrarErro(excelFilePath, numeroLinha, "N/A", e.getMessage());
-                    continue;
-                }
             }
 
 
@@ -94,7 +72,6 @@ public class ImportacaoController {
         entidade.setIsbn(dto.getIsbn());
         entidade.setAnoPublicacao(dto.getAnoPublicacao());
         entidade.setQuantidade(dto.getQuantidade());
-        entidade.setDisponivel(dto.getDisponivel());
         entidade.setNomeUsuario(dto.getNomeUsuario());
         entidade.setEmail(dto.getEmail());
         entidade.setTelefoneUsuario(dto.getTelefoneUsuario());
@@ -103,7 +80,7 @@ public class ImportacaoController {
         entidade.setDataEmprestimo(dto.getDataEmprestimo());
         entidade.setDataDevolucao(dto.getDataDevolucao());
         entidade.setStatusEmprestimo(dto.getStatusEmprestimo());
-
+        entidade.setDisponivel(dto.getDisponivel());
         return entidade;
     }
 
@@ -121,28 +98,21 @@ public class ImportacaoController {
         dto.setIsbn(getStringCellValue(row.getCell(8)));
         dto.setAnoPublicacao(getIntegerCellValue(row.getCell(9)));
         dto.setQuantidade(getIntegerCellValue(row.getCell(10)));
-        dto.setDisponivel(getBooleanCellValue(row.getCell(11)));
-        dto.setNomeUsuario(getStringCellValue(row.getCell(12)));
-        dto.setEmail(getStringCellValue(row.getCell(13)));
-        dto.setTelefoneUsuario(getStringCellValue(row.getCell(14)));
-        dto.setEnderecoUsuario(getStringCellValue(row.getCell(15)));
-        dto.setDataCadastro(getDateCellValue(row.getCell(16)));
-        dto.setDataEmprestimo(getDateCellValue(row.getCell(17)));
-        dto.setDataDevolucao(getDateCellValue(row.getCell(18)));
-        dto.setStatusEmprestimo(getStringCellValue(row.getCell(19)));
+        dto.setNomeUsuario(getStringCellValue(row.getCell(11)));
+        dto.setEmail(getStringCellValue(row.getCell(12)));
+        dto.setTelefoneUsuario(getStringCellValue(row.getCell(13)));
+        dto.setEnderecoUsuario(getStringCellValue(row.getCell(14)));
+        dto.setDataCadastro(getDateCellValue(row.getCell(15)));
+        dto.setDataEmprestimo(getDateCellValue(row.getCell(16)));
+        dto.setDataDevolucao(getDateCellValue(row.getCell(17)));
+        dto.setStatusEmprestimo(getStringCellValue(row.getCell(18)));
+        dto.setDisponivel(getBooleanCellValue(row.getCell(19)));
+
 
         return dto;
     }
 
-    private void registrarErro(String nomeArquivo, int numeroLinha, String campo, String mensagemErro) {
-        ControleImportacao erro = new ControleImportacao();
-        erro.setNomeArquivo(nomeArquivo);
-        erro.setLinha(numeroLinha);
-        erro.setCampo(campo);
-        erro.setMensagemErro(mensagemErro);
 
-        controleImportacaoDAO.salvar(erro);
-    }
 
     // Métodos auxiliares para obter os valores das células
 

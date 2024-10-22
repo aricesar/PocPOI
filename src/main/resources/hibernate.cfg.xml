@@ -24,7 +24,5 @@
 
         <!-- Mapeamentos de entidades -->
         <mapping class="model.Tabelao"/>
-        <mapping class="model.ControleImportacao"/>
-        <mapping class="model.Usuario"/>
     </session-factory>
 </hibernate-configuration>

@@ -15,7 +15,6 @@ public class TabelaoDTO {
     private String isbn;
     private Integer anoPublicacao;
     private Integer quantidade;
-    private Boolean disponivel;
     private String nomeUsuario;
     private String email;
     private String telefoneUsuario;
@@ -24,6 +23,24 @@ public class TabelaoDTO {
     private Date dataEmprestimo;
     private Date dataDevolucao;
     private String statusEmprestimo;
+
+    private Boolean disponivel;
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public String getEnderecoUsuario() {
+        return enderecoUsuario;
+    }
+
+    public void setEnderecoUsuario(String enderecoUsuario) {
+        this.enderecoUsuario = enderecoUsuario;
+    }
 
     public Integer getAutorId() {
         return autorId;
@@ -113,14 +130,6 @@ public class TabelaoDTO {
         this.quantidade = quantidade;
     }
 
-    public Boolean getDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(Boolean disponivel) {
-        this.disponivel = disponivel;
-    }
-
     public String getNomeUsuario() {
         return nomeUsuario;
     }
@@ -143,14 +152,6 @@ public class TabelaoDTO {
 
     public void setTelefoneUsuario(String telefoneUsuario) {
         this.telefoneUsuario = telefoneUsuario;
-    }
-
-    public String getEnderecoUsuario() {
-        return enderecoUsuario;
-    }
-
-    public void setEnderecoUsuario(String enderecoUsuario) {
-        this.enderecoUsuario = enderecoUsuario;
     }
 
     public Date getDataCadastro() {
